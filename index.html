@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Butterfly Spotter</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.15.0/dist/tf.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet@2.1.0" defer></script>
+    <script type="module" src="./app.js" defer></script>
+  </head>
+  <body>
+    <header class="hero">
+      <div>
+        <p class="overtitle">Real-time Butterfly Identifier</p>
+        <h1>Know your butterfly in seconds.</h1>
+        <p class="subtitle">Upload a photo or snap one with your camera. Our TensorFlow.js powered model compares it against ImageNet classes—perfect for quick field checks.</p>
+      </div>
+      <div class="stats">
+        <div>
+          <span class="value" id="scanCount">0</span>
+          <span class="label">Images scanned</span>
+        </div>
+        <div>
+          <span class="value">7+</span>
+          <span class="label">Common species detected</span>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="panel upload" id="dropZone">
+        <div class="panel-header">
+          <h2>Drop an image</h2>
+          <p>JPG, PNG, HEIC under 10 MB</p>
+        </div>
+        <div class="upload-actions">
+          <button id="selectButton">Choose a file</button>
+          <button id="cameraButton" class="ghost">Use camera</button>
+          <input type="file" accept="image/*" id="fileInput" hidden />
+        </div>
+        <div class="preview" id="previewWrapper">
+          <img id="previewImage" alt="Butterfly preview" />
+          <div id="placeholder">
+            <p>Drag & drop or tap to upload</p>
+            <small>We never store your images. Everything runs in your browser.</small>
+          </div>
+          <div class="loader" id="loader" aria-hidden="true">
+            <span></span><span></span><span></span>
+            <p>Analyzing wings...</p>
+          </div>
+        </div>
+        <div class="camera" id="cameraWrapper" hidden>
+          <video id="cameraStream" autoplay playsinline></video>
+          <div class="camera-controls">
+            <button id="snapButton">Capture</button>
+            <button id="closeCamera" class="ghost">Close</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel results">
+        <div class="panel-header">
+          <h2>Predictions</h2>
+          <p>Top matches with confidence scores</p>
+        </div>
+        <ul id="predictions" class="prediction-list">
+          <li>Upload an image to see predictions.</li>
+        </ul>
+        <div class="history" id="history">
+          <h3>Recent checks</h3>
+          <ul id="historyList"></ul>
+        </div>
+      </section>
+
+      <section class="panel species">
+        <div class="panel-header">
+          <h2>Field notes</h2>
+          <p>Quick facts about species you might spot</p>
+        </div>
+        <div class="species-grid" id="speciesGrid"></div>
+      </section>
+    </main>
+
+    <footer>
+      <p>Built with TensorFlow.js Mobilenet. Accuracy depends on lighting and framing—always confirm with field guides.</p>
+    </footer>
+  </body>
+</html>
